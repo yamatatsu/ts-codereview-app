@@ -28,7 +28,7 @@ Shai-Hulud のような npm ワームは、install スクリプトから環境�
 
 - `core` の `spawnSafe` を唯一の入口にする
   - 実行ファイルは**アプリ設定で明示した絶対パス**のみを許可する
-  - 初期値は固定の候補リストから自動検出する：`/opt/homebrew/bin`、`/usr/local/bin`、`/usr/bin`、`~/.local/share/mise/shims`、`~/.local/share/mise/installs/...`
+  - 初期値は固定の候補リストから自動検出する：`/opt/homebrew/bin`、`/usr/local/bin`、`/usr/bin`、`~/.local/share/vite-plus/bin`、`~/.vite-plus/bin`（Vite+ の shim）
   - ログインシェルの実行（`zsh -ilc`）による PATH の取り込みはしない
 - 子プロセスに渡す環境変数は**許可リスト方式**にする
   - 許可：`PATH`（設定から組み立てたもの）、`HOME`、`LANG`、`LC_ALL`、`TMPDIR`、`GIT_TERMINAL_PROMPT=0`
@@ -44,7 +44,7 @@ Shai-Hulud のような npm ワームは、install スクリプトから環境�
 ## Consequences
 
 - 新しい依存を入れるまでに最低 24 時間かかる
-- mise の shims パスを設定するには、ユーザーが初回に確認する必要がある
+- 候補にない場所（バージョンマネージャーの shim など）の実行ファイルを使うには、ユーザーが設定で絶対パスを指定する必要がある
 
 ## 実装時の確認結果（2026-10-06）
 

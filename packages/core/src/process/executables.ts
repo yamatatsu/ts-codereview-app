@@ -21,7 +21,9 @@ export type DetectedExecutable = {
 export const candidateDirectories = (home: string = os.homedir()): string[] => [
   '/opt/homebrew/bin',
   '/usr/local/bin',
-  path.join(home, '.local/share/mise/shims'),
+  // Vite+ の shim（プロジェクトごとに Node と pnpm のバージョンを選ぶ）
+  path.join(home, '.local/share/vite-plus/bin'),
+  path.join(home, '.vite-plus/bin'),
   path.join(home, '.local/bin'),
   '/Applications/Visual Studio Code.app/Contents/Resources/app/bin',
   '/Applications/Cursor.app/Contents/Resources/app/bin',

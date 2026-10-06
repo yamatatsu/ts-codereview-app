@@ -9,7 +9,6 @@
 - Vite+ は Electron 対応を明言していない
 - electron-vite の stable 版（5.x）は Vite 7 までしか対応しておらず、Vite 8 対応は 6.0 beta のみ。メンテナーも実質 1 人
 - Electron Forge 8 の plugin-vite は experimental のまま
-- mise のレジストリに Vite+ は未登録（issue #943）
 
 ## Decision
 
@@ -25,9 +24,10 @@ electron-vite と Forge は使わず、**Vite+ に同梱されたツールだけ
 
 Vite+ の導入方法：
 
-- グローバルの `curl | bash` は使わない
-- `vite-plus` を各 workspace の devDependency に入れる（バージョンは厳密に pin）
-- Node は mise に任せる。`vp env off` を実行して、Vite+ に Node を管理させない
+- グローバルの `vp` を入れ、Node と pnpm の選択とコマンドの実行に使う（docs/adr/0003）
+- ツールチェインのバージョンは、`vite-plus` を各 workspace の devDependency に入れて厳密に pin する
+  - グローバルの `vp` は、プロジェクトに `vite-plus` があればその版に処理を任せる。lockfile の版で動くので、手元と CI がずれない
+  - 設定ファイルの `defineConfig` とテストの `vite-plus/test` は devDependency から import する。このため devDependency は外せない
 
 ## Consequences
 
@@ -50,5 +50,5 @@ Vite+ の導入方法：
 - **スパイク A は成功**。tsdown（`vp pack`）で main / analysis を ESM、preload を CJS（sandbox 用）にバンドルし、Electron 44 で起動できた。開発時は `scripts/dev.ts` が Vite の dev server、`vp pack --watch`、Electron の再起動を束ねる（`vp run dev`）。
 - `@tsugi/core` だけをバンドルに含め、それ以外の依存は external にする（`deps.alwaysBundle` / `deps.neverBundle`）。external の依存はパッケージングに同梱されるよう `apps/desktop` の dependencies に置く。
 - Vite+ のドキュメント（`node_modules/vite-plus/docs/guide/local-cli.md`）に従い、pnpm の overrides で `vite` を `@voidzero-dev/vite-plus-core` にエイリアスし、`vitest` を同梱版（5.0.1）に pin した。これがないと plugin 経由で別の vite / vitest が入り、型が分裂する。
-- Vite+ はグローバルの `vp` を入れず devDependency のみで使うので、`vp env off` は不要だった（shim を使わないため）。
+- グローバルの `vp`（1.0.0）から `vp check` や `vp -C packages/core test` を実行すると、devDependency の `vite-plus` 1.0.0 が使われることを確認した（2026-10-06）。
 - electron-builder の依存収集は `*.d.ts` を除外するため、ネイティブ版 tsc が必要とする `lib*.d.ts` を `scripts/after-pack.cjs` で `app.asar.unpacked` にコピーする。

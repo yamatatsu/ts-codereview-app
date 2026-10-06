@@ -36,7 +36,7 @@ TSugi は TypeScript コードのレビューで「読む効率」を上げる�
 | ----------------------------------------------------------- | -------------------------------------------------------------------- |
 | [0001](./adr/0001-record-architecture-decisions.md)         | ADR で設計判断を記録する                                             |
 | [0002](./adr/0002-product-scope.md)                         | プロダクトスコープ：自分専用・読み取り専用・AI なし                  |
-| [0003](./adr/0003-runtime-and-toolchain.md)                 | ランタイムとツールチェイン：mise / Node 24 / pnpm / Electron 44      |
+| [0003](./adr/0003-runtime-and-toolchain.md)                 | ランタイムとツールチェイン：Vite+ / Node 24 / pnpm / Electron 44     |
 | [0004](./adr/0004-build-with-vite-plus-only.md)             | ビルドは Vite+ だけで組む（electron-vite 不採用）                    |
 | [0005](./adr/0005-typescript7-oxlint-oxfmt.md)              | TypeScript 7 と oxlint（type-aware）・oxfmt                          |
 | [0006](./adr/0006-monorepo-layout.md)                       | pnpm workspace で `apps/desktop` と `packages/core` に分ける         |

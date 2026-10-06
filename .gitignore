@@ -8,6 +8,3 @@ release/
 coverage/
 .vite/
 .vite-hooks/_
-
-# mise のローカル設定（個人の環境変数など）
-mise.local.toml

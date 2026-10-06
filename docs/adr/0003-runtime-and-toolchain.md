@@ -1,4 +1,4 @@
-# 0003. ランタイムとツールチェイン：mise / Node 24 / pnpm / Electron 44
+# 0003. ランタイムとツールチェイン：Vite+ / Node 24 / pnpm / Electron 44
 
 - Status: Accepted
 - Date: 2026-10-05
@@ -9,17 +9,21 @@
 
 - Electron の最新 stable は 44.5.1 で、Node 24.21.0（Chrome 152）を同梱している
 - Node の Active LTS は 24.21.0 で、26 は 2026-10-28 に LTS 化する予定
-- mise は導入済み
+- Vite+ のグローバル CLI（`vp`）は、プロジェクトの宣言から Node と pnpm のバージョンを選んで起動できる（`vp env`）
 
 ## Decision
 
-- **mise** で Node と pnpm を管理する。`mise.toml` で厳密に pin する
-  ```toml
-  [tools]
-  node = "24.21.0"   # Electron 44 同梱の Node と一致させる
-  pnpm = "<Phase 0 で確定した厳密バージョン>"
+- Node と pnpm のバージョンは **Vite+ のグローバル CLI** に選ばせる。宣言はルートの `package.json` にまとめる
+  ```json
+  {
+    "engines": { "node": "24.21.0" },
+    "packageManager": "pnpm@12.9.1"
+  }
   ```
-- **パッケージマネージャーは pnpm**。`packageManager` フィールドでも pin する
+  - `engines.node` は Electron 44 同梱の Node と一致させる
+  - `devEngines.runtime` は使わない（pnpm も同じ宣言で Node を管理しようとし、二重管理になるため）
+- **パッケージマネージャーは pnpm**
+- CI では `voidzero-dev/setup-vp` が同じ宣言から Node と pnpm を揃える（docs/adr/0019）
 - **Electron 44.x** を使う
 - 開発時の Node のメジャーバージョンは、Electron 同梱の Node と常に揃える
 
@@ -38,5 +42,6 @@
 
 ## 実装時の確認結果（2026-10-06）
 
-- `mise.toml` は `node = "24.21.0"`、`pnpm = "12.9.1"` で pin した（pnpm は 12 系が最新の stable だった）。
+- `engines.node` は `24.21.0`、`packageManager` は `pnpm@12.9.1` で pin した（pnpm は 12 系が最新の stable だった）。
+- `vp env current` で、Node が `engines.node`、pnpm が `packageManager` から選ばれることを確認済み。
 - Electron 44.5.1 の main で `process.versions.node` が `24.21.0` であることを確認済み。

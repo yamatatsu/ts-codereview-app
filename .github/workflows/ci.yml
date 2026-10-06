@@ -13,15 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
-      - uses: jdx/mise-action@5228313ee0372e111a38da051671ca30fc5a96db # v3.6.3
+      # Node は package.json の engines.node、pnpm は packageManager から Vite+ が選ぶ
+      - uses: voidzero-dev/setup-vp@3754dd7dbdb32bd8f6d28b6043de13ad3a75f21f # v1.21.1
         with:
-          install: true
           cache: true
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: vp install --frozen-lockfile
       - name: Check (format / lint / type check)
-        run: pnpm exec vp check
+        run: vp check
       - name: Test (core)
-        run: pnpm -C packages/core exec vp test
+        run: vp -C packages/core test
       - name: Test (desktop renderer logic)
-        run: pnpm -C apps/desktop exec vp test
+        run: vp -C apps/desktop test

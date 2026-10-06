@@ -13,28 +13,27 @@ TypeScript のコードレビューで「読む効率」を上げる、macOS（A
 
 ## セットアップ
 
-[mise](https://mise.jdx.dev/) で Node と pnpm を揃えます。
+[Vite+](https://viteplus.dev/) のグローバル CLI（`vp`）を入れておきます。Node 24.21.0 と pnpm 12.9.1 は、`package.json` の `engines.node` と `packageManager` から `vp` が選びます。
 
 ```bash
-mise install          # node 24.21.0 / pnpm 12.9.1
-pnpm install          # サプライチェーン対策の設定は pnpm-workspace.yaml（docs/adr/0016）
+vp install            # サプライチェーン対策の設定は pnpm-workspace.yaml（docs/adr/0016）
 ```
 
 ## 開発
 
 ```bash
-pnpm exec vp check                         # format・lint・型チェック（oxfmt / oxlint / TS7）
-pnpm -C packages/core exec vp test         # core のユニットテストと統合テスト
-pnpm -C apps/desktop exec vp test          # renderer のロジックのテスト
-pnpm -C apps/desktop exec vp run dev       # 開発起動（Vite の dev server + tsdown の watch + Electron）
-pnpm -C apps/desktop exec vp run e2e       # Electron の E2E（Playwright。ローカルでのみ実行）
-TSUGI_E2E_GITHUB=1 pnpm -C apps/desktop exec vp run e2e  # 本物の GitHub の PR も読む（GH_TOKEN に PAT が必要）
+vp check                         # format・lint・型チェック（oxfmt / oxlint / TS7）
+vp -C packages/core test         # core のユニットテストと統合テスト
+vp -C apps/desktop test          # renderer のロジックのテスト
+vp -C apps/desktop run dev       # 開発起動（Vite の dev server + tsdown の watch + Electron）
+vp -C apps/desktop run e2e       # Electron の E2E（Playwright。ローカルでのみ実行）
+TSUGI_E2E_GITHUB=1 vp -C apps/desktop run e2e  # 本物の GitHub の PR も読む（GH_TOKEN に PAT が必要）
 ```
 
 ## ビルドとインストール
 
 ```bash
-pnpm -C apps/desktop exec vp run package   # apps/desktop/release/mac-arm64/TSugi.app
+vp -C apps/desktop run package   # apps/desktop/release/mac-arm64/TSugi.app
 ```
 
 自分専用なので署名していません。ほかの場所からコピーした `.app` を開けない場合は、quarantine 属性を外してください。

@@ -32,7 +32,7 @@
 | キー                                | 内容                                 | デフォルト                                                                                               |
 | ----------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------- |
 | `executables.git`                   | git の絶対パス                       | 自動検出                                                                                                 |
-| `executables.pnpm` / `npm` / `yarn` | 絶対パス                             | 自動検出（mise の shims を含む）                                                                         |
+| `executables.pnpm` / `npm` / `yarn` | 絶対パス                             | 自動検出（Vite+ の shim を含む）                                                                         |
 | `executables.node`                  | pnpm などを実行する node             | 自動検出                                                                                                 |
 | `diff.layout`                       | `split` / `unified`                  | `split`                                                                                                  |
 | `diff.defaultCollapsedGlobs`        | 折りたたみ表示の glob                | `pnpm-lock.yaml`、`package-lock.json`、`yarn.lock`、`**/*.snap`、`**/dist/**`、`linguist-generated` 属性 |
@@ -43,7 +43,7 @@
 
 ### 実行ファイルの自動検出
 
-- 候補ディレクトリを固定順に探す：`/opt/homebrew/bin`、`/usr/local/bin`、`/usr/bin`、`~/.local/share/mise/shims`
+- 候補ディレクトリを固定順に探す：`/opt/homebrew/bin`、`/usr/local/bin`、`/usr/bin`、`~/.local/share/vite-plus/bin`、`~/.vite-plus/bin`
 - 見つかったら `--version` を実行して検証し、設定画面に結果を表示する
 - 初回起動時は、オンボーディングで検出結果を確認してもらう
 - 見つからない場合は、ファイル選択で指定してもらう

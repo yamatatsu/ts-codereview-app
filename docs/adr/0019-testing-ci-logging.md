@@ -19,7 +19,7 @@
 ### CI
 
 - GitHub Actions で、ubuntu-latest 上で `pnpm install --frozen-lockfile`、`vp check`、`vp test` を実行する
-  - mise は `jdx/mise-action` で導入する
+  - Node・pnpm・Vite+ は `voidzero-dev/setup-vp` で導入する（`package.json` の宣言から選ぶ。docs/adr/0003）
   - 外部の Action はタグではなくコミット SHA で固定し、バージョンはコメントで添える（タグの付け替えによるサプライチェーン攻撃を避ける。docs/adr/0016 と同じ方針）
   - トークンの権限は `contents: read` だけにする（public リポジトリで fork からの PR を受けても書き込めない）
 - Electron の E2E とパッケージングは CI では実行しない

@@ -9,7 +9,7 @@
 ### 0-1. リポジトリの初期化
 
 - [x] `git init` し、`.gitignore` を置く（`node_modules`、`dist`、`out`、`.DS_Store`、`*.log`）
-- [x] `mise.toml` を作る：`node = "24.21.0"`、`pnpm = "<最新の stable を厳密に pin>"`。`mise install` を実行する
+- [x] ルートの `package.json` で Node と pnpm を pin する：`engines.node = "24.21.0"`、`packageManager = "pnpm@<最新の stable>"`。Vite+ のグローバル CLI がこの宣言から選ぶ
 - [x] ルートの `package.json`：`"private": true`、`packageManager: "pnpm@<ver>"`、`engines.node`
 - [x] `pnpm-workspace.yaml` を作る：`packages: [apps/*, packages/*]`、`minimumReleaseAge: 1440`、ビルド許可リスト、`strictDepBuilds: true`
   - [x] 使用する pnpm バージョンでの正しい設定名を公式ドキュメントで確認する（[ADR 0016](../adr/0016-supply-chain-and-subprocess-hardening.md)）
@@ -59,7 +59,7 @@
 
 ### 0-8. CI とフック
 
-- [x] `.github/workflows/ci.yml`：mise-action → `pnpm install --frozen-lockfile` → `vp check` → `vp test`
+- [x] `.github/workflows/ci.yml`：setup-vp → `vp install --frozen-lockfile` → `vp check` → `vp test`
 - [x] pre-commit：Vite+ の `vp hooks` と `vp staged` を使う（lefthook は不要）
 
 ## 完了条件

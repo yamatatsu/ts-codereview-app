@@ -11,7 +11,6 @@ git、解析、ドメインロジックを Electron から切り離しておく�
 
 ```
 .
-├── mise.toml
 ├── pnpm-workspace.yaml
 ├── package.json            # ルートは vp run のタスク定義のみ
 ├── apps/

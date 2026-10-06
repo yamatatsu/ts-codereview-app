@@ -71,7 +71,7 @@ function SettingsForm({ settings: s }: { settings: Settings }) {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          ログインシェルは実行せず、/opt/homebrew/bin・/usr/local/bin・~/.local/share/mise/shims
+          ログインシェルは実行せず、/opt/homebrew/bin・/usr/local/bin・~/.local/share/vite-plus/bin
           などの決まった場所だけを探します。
         </p>
         {EXECUTABLES.map(({ name, label }) => {
