@@ -28,6 +28,7 @@ pnpm -C packages/core exec vp test         # core のユニットテストと統
 pnpm -C apps/desktop exec vp test          # renderer のロジックのテスト
 pnpm -C apps/desktop exec vp run dev       # 開発起動（Vite の dev server + tsdown の watch + Electron）
 pnpm -C apps/desktop exec vp run e2e       # Electron の E2E（Playwright。ローカルでのみ実行）
+TSUGI_E2E_GITHUB=1 pnpm -C apps/desktop exec vp run e2e  # 本物の GitHub の PR も読む（GH_TOKEN に PAT が必要）
 ```
 
 ## ビルドとインストール

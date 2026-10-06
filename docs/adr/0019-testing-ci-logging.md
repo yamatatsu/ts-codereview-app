@@ -41,3 +41,8 @@
 - E2E は vitest と Playwright の `_electron` で、ビルド済みのアプリを一時的な userData で起動する（`vp run e2e`）。
   - GitHub PR のフローは、モックの GitHub API と、`refs/pull/N/head` を持つローカルの upstream で検証する。
   - `TSUGI_E2E_PACKAGED=1` を付けると、パッケージ版の `.app` に対して同じテストを実行する。
+  - `TSUGI_E2E_GITHUB=1` を付けると、本物の GitHub に対するテスト（`e2e/github-live.e2e.ts`）も実行する（2026-10-06 追加）。
+    - public の fixture リポジトリ `yamatatsu/tsugi-e2e-fixture` の draft PR #1（閉じない・マージしない）を読むだけで、GitHub には書き込まない。
+    - 確認すること：origin からのリポジトリ判定、無効な PAT を保存しないこと、PR 一覧、worktree への展開とオフライン install、テスト対応付け、定義ジャンプ、worktree と ref の後始末。
+    - PAT はテストが `GH_TOKEN` から読み、設定画面と同じ API でアプリに渡す。アプリ自身は環境変数を読まない（docs/adr/0013）。
+    - CI では実行しない（PAT を Actions の secret に置かないため）。

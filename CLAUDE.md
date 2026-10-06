@@ -7,6 +7,7 @@
 - 静的チェック：`pnpm exec vp check`（`--fix` で整形と自動修正）
 - テスト：`pnpm -C packages/core exec vp test`、`pnpm -C apps/desktop exec vp test`
 - E2E：`pnpm -C apps/desktop exec vp run e2e`（ビルドしてから Electron を起動する）
+  - `TSUGI_E2E_GITHUB=1` を付けると、本物の GitHub の fixture（`yamatatsu/tsugi-e2e-fixture` の PR #1）を読むテストも動く。PAT は `GH_TOKEN` からテストが読み、アプリには API で渡す
 - テストの import は `vite-plus/test` から行う（`vitest` を直接 import しない）
 
 ## 守ること
