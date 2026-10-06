@@ -223,6 +223,8 @@ export class TargetService {
       logger.warn('install failed, falling back to symlink', { key, error: result.error });
       status = (await symlinkNodeModules(project.rootPath, dir)) ? 'fallback' : 'failed';
     }
+    // install 中に worktree が削除された（PR が closed になった等）なら、LSP は起動し直さない
+    if (!(await repos.prWorktrees.getById(worktreeId))) return;
     await setStatus(status);
     // 依存が揃ったので LSP を起動し直す
     await this.#ctx.lsp.stop(dir);

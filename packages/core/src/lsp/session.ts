@@ -94,6 +94,15 @@ export class LspSession {
       if (this.#status !== 'stopped') this.#setStatus('error', `tsc --lsp が終了しました (code ${code})`);
       this.#options.onExit?.(code);
     });
+    // 起動に失敗したとき（cwd の worktree が消えた場合など）。リスナーがないと main の未捕捉例外になる。
+    // exit は来ないことがあるので、ここで後始末する。再起動しても同じ理由で失敗するので onExit は呼ばない
+    child.on('error', (error) => {
+      this.#connection?.dispose();
+      this.#connection = undefined;
+      this.#open.clear();
+      if (this.#status !== 'stopped')
+        this.#setStatus('error', `tsc --lsp を起動できません: ${error.message}`);
+    });
 
     // サーバーからのリクエストには最小限の応答を返す
     connection.onRequest('workspace/configuration', (params: { items?: unknown[] }) =>
@@ -132,6 +141,8 @@ export class LspSession {
       this.#setStatus('error', errorMessage(error));
       throw error;
     });
+    // 失敗は #whenReady で待つ側に返す。誰も待っていないときに未処理の rejection にしない
+    this.#ready.catch(() => undefined);
     return Result.succeed();
   }
 

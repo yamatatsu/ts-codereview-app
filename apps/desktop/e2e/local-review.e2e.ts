@@ -58,6 +58,19 @@ describe('ローカル差分のレビュー', () => {
 
   it('⌥O で実装とテストを行き来できる', async () => {
     const { page } = launched;
+    // 対応付けの解析が終わる前に押すと何も起きないので、先に終わるのを待つ
+    await expect
+      .poll(
+        async () =>
+          (
+            await callApi<{ ready: boolean }>(
+              page,
+              'GET',
+              `/targets/${encodeURIComponent(targetKey)}/test-links`,
+            )
+          ).ready,
+      )
+      .toBe(true);
     await page.getByText('math.ts', { exact: true }).first().click();
     await expect.poll(() => currentFile().textContent()).toContain('src/math.ts');
     await page.keyboard.press('Alt+KeyO');

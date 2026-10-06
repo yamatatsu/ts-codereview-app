@@ -99,3 +99,18 @@ describe('LspSession (tsc --lsp)', () => {
     expect(Result.isSuccess(result) && result.value.map((s) => s.name)).toContain('msg');
   });
 });
+
+describe('起動できないとき', () => {
+  it('cwd の workspace が消えていても例外にせず、error 状態にする', async () => {
+    const statuses: string[] = [];
+    const missing = new LspSession({
+      tscPath: await resolveBundledTscPath(import.meta.dirname),
+      workspacePath: path.join(repo.dir, 'removed-worktree'),
+      onStatus: (status) => statuses.push(status),
+    });
+    // spawn の失敗は error イベントで非同期に届く。リスナーがないと未捕捉例外になる
+    expect(missing.start()).toBeSuccess();
+    await expect.poll(() => statuses.at(-1)).toBe('error');
+    await missing.stop();
+  });
+});
