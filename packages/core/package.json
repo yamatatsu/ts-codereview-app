@@ -1,0 +1,29 @@
+{
+  "name": "@tsugi/core",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@octokit/rest": "22.0.1",
+    "@praha/byethrow": "0.12.0",
+    "drizzle-orm": "0.45.3",
+    "oxc-parser": "0.152.0",
+    "oxc-resolver": "11.24.2",
+    "picomatch": "4.0.7",
+    "vscode-jsonrpc": "9.0.3",
+    "vscode-languageserver-protocol": "3.18.4",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@praha/byethrow-testing": "0.12.0",
+    "@types/node": "24.19.1",
+    "@types/picomatch": "4.0.3",
+    "typescript": "7.0.2",
+    "vite-plus": "1.0.0",
+    "vitest": "5.0.1"
+  }
+}

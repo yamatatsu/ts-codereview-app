@@ -1,0 +1,21 @@
+appId: local.tsugi
+productName: TSugi
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+asar: true
+# ネイティブ版 tsc の lib*.d.ts をコピーする（依存の収集で *.d.ts が除外されるため）
+afterPack: scripts/after-pack.cjs
+asarUnpack:
+  # ネイティブバイナリは asar の外に出す
+  - node_modules/@typescript/**
+  - node_modules/@parcel/**
+  - node_modules/@oxc-parser/**
+  - node_modules/@oxc-resolver/**
+mac:
+  target: dir
+  category: public.app-category.developer-tools
+  # 自分専用なので署名しない（docs/adr/0002）
+  identity: null

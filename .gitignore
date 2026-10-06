@@ -1,0 +1,13 @@
+node_modules/
+dist/
+out/
+release/
+.DS_Store
+*.log
+*.tsbuildinfo
+coverage/
+.vite/
+.vite-hooks/_
+
+# mise のローカル設定（個人の環境変数など）
+mise.local.toml

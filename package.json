@@ -1,0 +1,16 @@
+{
+  "name": "tsugi-monorepo",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@praha/byethrow-docs": "0.12.0",
+    "@praha/byethrow-oxlint": "0.12.0",
+    "typescript": "7.0.2",
+    "vite-plus": "1.0.0"
+  },
+  "engines": {
+    "node": "24.21.0"
+  },
+  "packageManager": "pnpm@12.9.1"
+}

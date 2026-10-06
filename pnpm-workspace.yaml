@@ -1,0 +1,21 @@
+packages:
+  - apps/*
+  - packages/*
+
+# サプライチェーン対策（docs/adr/0016）
+minimumReleaseAge: 1440
+strictDepBuilds: true
+allowBuilds:
+  electron: true
+  '@parcel/watcher': true
+  esbuild: false
+  electron-winstaller: false
+  sqlite3: false
+
+# 依存は厳密なバージョンで記録する
+saveExact: true
+
+# Vite+ のコアと Vitest を 1 つに揃える（node_modules/vite-plus/docs/guide/local-cli.md）
+overrides:
+  vite: npm:@voidzero-dev/vite-plus-core@1.0.0
+  vitest: 5.0.1
